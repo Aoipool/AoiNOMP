@@ -1,0 +1,78 @@
+{
+    "enabled": true,
+    "coin": "raptoreum.json",
+
+    "address": "RX5HbBn74XKoPJbWjdF134ngqRfFeFYFz1",    
+    "donateaddress": "RLe9QppsKrxSuCkLG9BvfKcqU5Rw2c6nfk",
+
+    "rewardRecipients": {
+        "RHpBemXidam2LAWtFfTvGNLUbPkByHDe9P": 0.5,
+        "RJEES8wNfoCRtr7zXWo1emj5cwgYdZw7hf": 0.5
+    },
+
+    "paymentProcessing": {
+        "enabled": false,
+        "schema": "PROP",
+        "paymentInterval": 600,
+        "minimumPayment": 10,
+        "maxBlocksPerPayment": 10,
+        "minConf": 30,
+        "coinPrecision": 8,
+        "daemon": {
+            "host": "127.0.0.1",
+            "port": 8777,
+            "user": "rapture",
+            "password": "ehu489fkndc"
+        }
+    },
+
+    "ports": {
+      "8935": {
+        "diff" : 0.5,
+          "varDiff": {
+    	      "minDiff": 0.1,
+    	      "maxDiff": 20,
+    	      "targetTime": 60,
+    	      "retargetTime": 180,
+    	      "variancePercent": 20
+          }
+       }
+    },
+
+    "daemons": [
+        {
+            "host": "127.0.0.1",
+            "port": 8777,
+            "user": "rapture",
+            "password": "ehu489fkndc"
+        }
+    ],
+
+    "p2p": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 19333,
+        "disableTransactions": true
+    },
+
+    "mposMode": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 3306,
+        "user": "me",
+        "password": "mypass",
+        "database": "ltc",
+        "checkPassword": true,
+        "autoCreateWorker": false
+    },
+
+    "mongoMode": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "user": "",
+        "pass": "",
+        "database": "ltc",
+        "authMechanism": "DEFAULT"
+    }
+
+}
