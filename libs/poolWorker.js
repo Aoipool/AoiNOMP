@@ -154,7 +154,7 @@ module.exports = function() {
         } else {
           try {
             // tests address.worker syntax
-            let re = /^(?:[a-zA-Z0-9]+\.)*[a-zA-Z0-9]+$/;
+            let re = /^(?:[a-zA-Z0-9]+)(\..*)*$/;
             if (re.test(workerName)) {
               // not valid input, does not respect address.worker scheme. Acceptable chars a a-Z and 0-9
               //todo log

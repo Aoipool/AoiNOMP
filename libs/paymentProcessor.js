@@ -594,9 +594,8 @@ function SetupForPool(poolOptions, setupFinished) {
             }
 
             var generationTx = tx.result.details.filter(function(tx) {
-              return tx.address === poolOptions.address;
+              return tx.address === poolOptions.address && tx.amount;
             })[0];
-
 
             if (!generationTx && tx.result.details.length === 1) {
               generationTx = tx.result.details[0];
@@ -609,6 +608,7 @@ function SetupForPool(poolOptions, setupFinished) {
 
             round.category = generationTx.category;
             if (round.category === 'generate') {
+//              console.log("generationTx %O\n", generationTx);
               round.reward = generationTx.amount || generationTx.value;
             }
 
@@ -798,8 +798,8 @@ function SetupForPool(poolOptions, setupFinished) {
               case 'generate':
                 /* We found a confirmed block! Now get the reward for it and calculate how much
                    we owe each miner based on the shares they submitted during that block round. */
-                logger.info("PP> We have found confirmed block #%s ready for payout", round.height);
-                logger.silly("PP> round.reward = %s", round.reward);
+                logger.info("PP> We have found confirmed block #%s ready for payout", round.height);			    
+                logger.info("PP> round = %O", round);
                 var reward = new BigNumber(round.reward);
                 logger.silly("PP> reward = %s", reward.toString(10));
 
@@ -964,7 +964,9 @@ function SetupForPool(poolOptions, setupFinished) {
             feeAddresses.push(feeaddy);// = 0.0;
           });*/
           
-
+	  if(!addressAccount) {
+	      addressAccount = "";
+	  }
           logger.info('PP> Ok, going to pay from "%s" address with final amounts: %s', addressAccount, JSON.stringify(addressAmounts));
           logger.info('PP> Ok, going to pay FEES from "%s" addresses: %s', feeAddresses, JSON.stringify(feeAddresses));
 
@@ -974,7 +976,7 @@ function SetupForPool(poolOptions, setupFinished) {
           /* CHANGED TO INSTANTSEND (NEEDS CONFIG OPTION) */
           // Send Many needs custom for each coin... Or general one like below that SHOULD work with all forks. (, false, "Miner Payment", feeAddresses, true, false)
 
-          daemon.cmd('sendmany', [addressAccount || '', addressAmounts, 1, ""], function(result) {
+          daemon.cmd('sendmany', [addressAccount || '', addressAmounts, 1, true, ""], function(result) {
             //Check if payments failed because wallet doesn't have enough coins to pay for tx fees
             if (result.error && result.error.code === -6) {
               var higherPercent = withholdPercent.plus(new BigNumber(0.01));
